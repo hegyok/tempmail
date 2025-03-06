@@ -15,6 +15,7 @@ function App() {
   const [emails, setEmails] = useState<Email[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedEmail, setSelectedEmail] = useState<Email | null>(null);
+  
   const [emailAddress, setEmailAddress] = useState<string>('')
 
   const fetchEmails = async () => {
@@ -32,10 +33,15 @@ function App() {
   useEffect(() => {
     const id = crypto.randomUUID()
     setEmailAddress(`${id}@t.hegy.xyz`)
-    fetchEmails();
-    const interval = setInterval(fetchEmails, 10000);
-    return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    if (emailAddress) {
+      fetchEmails();
+      const interval = setInterval(() => fetchEmails(), 10000);
+      return () => clearInterval(interval);
+    }
+  }, [emailAddress]);
 
   const copyToClipboard = async () => {
     try {
