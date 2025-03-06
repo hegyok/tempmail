@@ -15,6 +15,17 @@ function uuidv4() {
 }
 
 export default {
+  async fetch(request, env, ctx) {
+    const url = new URL(request.url)
+    const email = url.searchParams.get("email")
+    if (!email) {
+      return new Response("Missing email", { status: 400 })
+    }
+    const emails = await env.DB.prepare('select * from emails where "to" = ?').bind(email).all<Email>()
+    const response = new Response(JSON.stringify(emails.results), { status: 200 })
+    response.headers.set("Access-Control-Allow-Origin", "*")
+    return response
+  },
   async email(message, env, ctx) {
     const email = await postalMime.parse(message.raw)
     const data = {
