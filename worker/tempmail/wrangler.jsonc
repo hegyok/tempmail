@@ -1,0 +1,26 @@
+{
+  "name": "tempmail",
+  "main": "src/index.ts",
+  "compatibility_date": "2000-01-01",
+  "workers_dev": true,
+  "preview_urls": false,
+  "send_email": [
+    {
+      "name": "mail"
+    }
+  ],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  },
+  "vars": {
+    "API_URL": "http://localhost"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "tempmail",
+      "database_id": "11512cab-85e7-4897-a389-b8526d1aba6b"
+    }
+  ]
+}
